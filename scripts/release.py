@@ -67,8 +67,9 @@ def build_exe() -> None:
     run([sys.executable, "-m", "PyInstaller", "MagicCompress.spec", "--noconfirm", "--clean"])
 
 
-def build_installer() -> None:
-    run([find_iscc(), os.path.join("installer", "MagicCompress.iss")])
+def build_installer(version: str) -> None:
+    # Stamp the installer with the code version (single source of truth).
+    run([find_iscc(), f"/DAppVersion={version}", os.path.join("installer", "MagicCompress.iss")])
     if not os.path.exists(SETUP_EXE):
         sys.exit(f"Installer build did not produce {SETUP_EXE}")
 
@@ -114,7 +115,7 @@ def main() -> None:
     version = app_version()
     print(f"=== Magic Compress {version} ===", flush=True)
     build_exe()
-    build_installer()
+    build_installer(version)
     build_zip()
     if args.release:
         cut_release(version)

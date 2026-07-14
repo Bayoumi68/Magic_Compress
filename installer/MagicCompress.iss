@@ -3,7 +3,11 @@
 ; the Inno Setup Compiler (ISCC.exe) to produce dist\MagicCompress-Setup.exe.
 
 #define AppName "Magic Compress"
-#define AppVersion "0.1.0"
+; AppVersion is normally passed by scripts/release.py (ISCC /DAppVersion=x.y.z),
+; sourced from magic_compress/__init__.py. This is only a fallback default.
+#ifndef AppVersion
+  #define AppVersion "0.0.0"
+#endif
 #define AppExe "MagicCompress.exe"
 #define AppPublisher "Magic Compress"
 
