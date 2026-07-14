@@ -110,8 +110,15 @@ pyinstaller MagicCompress.spec                        # 1. build the exe
 iscc installer\MagicCompress.iss                      # 2. build the installer
 ```
 
-This produces `dist/MagicCompress-Setup.exe`, which is then zipped to
-`dist/MagicCompress-<version>-Setup.zip` for distribution. The installer reuses
+Or do the whole pipeline (exe → installer → zip → GitHub release) in one step:
+
+```bash
+python scripts/release.py            # build exe + installer + setup zip
+python scripts/release.py --release  # ...and publish/refresh the GitHub release
+```
+
+This produces `dist/MagicCompress-Setup.exe`, zipped to
+`dist/MagicCompress-Setup.zip` for distribution. The installer reuses
 the app's own association code (`MagicCompress.exe --register-associations`) so
 what the installer registers and what the in-app **Settings ▸ Register with
 Explorer** button registers are identical. The single-file `MagicCompress.exe`

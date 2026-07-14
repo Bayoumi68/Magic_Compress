@@ -12,6 +12,11 @@ AppId={{8F3A1C7E-2B4D-4E6A-9C1B-5D7E9F0A2B3C}}
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppPublisher={#AppPublisher}
+; Detect a running Magic Compress (it holds this mutex) and close it during
+; install/upgrade/uninstall instead of failing on the locked exe.
+AppMutex=MagicCompressAppMutex
+CloseApplications=yes
+RestartApplications=yes
 DefaultDirName={autopf}\{#AppName}
 DefaultGroupName={#AppName}
 UninstallDisplayIcon={app}\{#AppExe}

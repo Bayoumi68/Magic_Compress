@@ -17,6 +17,23 @@ from .ui.prefs import Prefs, apply_runtime_prefs
 from .ui.style import apply_theme
 
 
+# Held for the process lifetime so the installer can detect a running instance
+# (Inno Setup's AppMutex) and close it via the Restart Manager during upgrades.
+APP_MUTEX_NAME = "MagicCompressAppMutex"
+_app_mutex_handle = None
+
+
+def _acquire_app_mutex() -> None:
+    global _app_mutex_handle
+    if sys.platform != "win32":
+        return
+    try:
+        import ctypes
+        _app_mutex_handle = ctypes.windll.kernel32.CreateMutexW(None, False, APP_MUTEX_NAME)
+    except Exception:  # noqa: BLE001 — never let this stop the app from starting
+        _app_mutex_handle = None
+
+
 def _first_path(args: list[str]) -> str | None:
     for a in args:
         if a and not a.startswith("-"):
@@ -75,6 +92,8 @@ def main(argv: list[str] | None = None) -> int:
         from .associations import unregister
         unregister()
         return 0
+
+    _acquire_app_mutex()
 
     app = QApplication.instance() or QApplication(argv)
     app.setOrganizationName("MagicCompress")
