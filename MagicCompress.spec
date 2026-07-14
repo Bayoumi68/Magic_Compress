@@ -46,19 +46,31 @@ a = Analysis(
 
 pyz = PYZ(a.pure)
 
+# One-DIR build (not one-file): MagicCompress.exe is the actual app process that
+# owns the window, so Windows' Restart Manager (used by the installer) can close
+# it gracefully during upgrades. A one-file build hides the window in a child
+# process, which the Restart Manager cannot close.
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,
-    a.datas,
     [],
+    exclude_binaries=True,
     name="MagicCompress",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=False,
-    runtime_tmpdir=None,
     console=False,   # GUI app — no console window
     disable_windowed_traceback=False,
     icon="assets/MagicCompress.ico",
+)
+
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.datas,
+    strip=False,
+    upx=False,
+    upx_exclude=[],
+    name="MagicCompress",
 )

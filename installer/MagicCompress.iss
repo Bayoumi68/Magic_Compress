@@ -41,7 +41,8 @@ Name: "desktopicon"; Description: "Create a &desktop shortcut"; GroupDescription
 Name: "associate"; Description: "Register {#AppName} in Explorer's ""Open with"" menu for archives (.zip, .7z, .rar, .tar, …)"; GroupDescription: "Explorer integration:"
 
 [Files]
-Source: "..\dist\{#AppExe}"; DestDir: "{app}"; Flags: ignoreversion
+; PyInstaller one-dir output: the exe plus its _internal dependency folder.
+Source: "..\dist\MagicCompress\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion isreadme
 
 [Icons]

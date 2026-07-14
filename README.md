@@ -90,15 +90,18 @@ python main.py                    # or: python main.py path\to\archive.zip
 
 ## Building a standalone executable
 
-To produce a single `.exe` that runs without a Python install (Windows):
+To produce a runnable build that needs no Python install (Windows):
 
 ```bash
 pip install pyinstaller
 pyinstaller MagicCompress.spec
 ```
 
-The result is `dist/MagicCompress.exe`. The [spec](MagicCompress.spec) bundles the
-compression backends and trims unused Qt modules to keep the binary lean.
+The result is the `dist/MagicCompress/` folder containing `MagicCompress.exe`
+plus its dependencies. The [spec](MagicCompress.spec) uses a one-*dir* build
+(not one-file) on purpose: the exe is the real window-owning process, so the
+installer's Restart Manager can close it during upgrades. It also bundles the
+compression backends and trims unused Qt modules.
 
 ### Windows installer
 
@@ -121,8 +124,8 @@ This produces `dist/MagicCompress-Setup.exe`, zipped to
 `dist/MagicCompress-Setup.zip` for distribution. The installer reuses
 the app's own association code (`MagicCompress.exe --register-associations`) so
 what the installer registers and what the in-app **Settings ▸ Register with
-Explorer** button registers are identical. The single-file `MagicCompress.exe`
-can also be run as-is — no installation required.
+Explorer** button registers are identical. The `dist/MagicCompress/` folder can
+also be copied and run as-is (via `MagicCompress.exe`) — no installation required.
 
 ### Explorer right-click actions
 
