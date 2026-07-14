@@ -4,6 +4,11 @@ A WinRAR-style desktop archive manager built with Python and PySide6. Create,
 browse, and extract compressed archives with encryption, adjustable compression,
 in-place add/delete, and drag-and-drop.
 
+### ⬇ [Download for Windows](https://github.com/Bayoumi68/Magic_Compress/releases/latest/download/MagicCompress-Setup.zip)
+
+Unzip and run `MagicCompress-Setup.exe` — no Python installation required. (This
+link always points to the newest release.)
+
 ![Magic Compress](docs/screenshot.png)
 
 ## Features
